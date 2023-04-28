@@ -1,0 +1,45 @@
+﻿@using MvcStok.Models.Entity
+@using PagedList
+@using PagedList.Mvc
+@model PagedList.IPagedList<TBLMUSTERİLER>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<table class="table table-bordered">
+    <tr>
+        <th>MÜŞTERİ ID</th>
+        <th>MÜŞTERİ ADI</th>
+        <th>MÜŞTERİ SOYAD</th>
+        <th>SİL</th>
+        <th>GÜNCELLE</th>
+        <th>ALERT</th>
+    </tr>
+    <tbody>
+
+        @foreach (var mstr in Model)
+        {
+            <tr>
+                <th>@mstr.MUSTERİID</th>
+                <td>@mstr.MUSTERİAD</td>
+                <td>@mstr.MUSTERİSOYAD</td>
+                <td> <a href="/Musteriler/Sil/@mstr.MUSTERİID" class="btn btn-danger">Sil</a></td>
+                <td> <a href="/Musteriler/MusteriGetir/@mstr.MUSTERİID" class="btn btn-success">Güncelle</a></td>
+                <td> @Html.ActionLink("SİL BUTONU", "Sil", new { id=mstr.MUSTERİID }, new { @class="btn btn-warning", onclick= "return confirm('Silmek İstiyormusunuz')"}) </td>
+
+            </tr>
+
+
+                                                        }
+
+    </tbody>
+
+
+
+
+
+
+</table>
+@Html.PagedListPager((IPagedList)Model, sayfa => Url.Action("Index", new { sayfa }))
+<a href="/Musteriler/YeniMusteriler/" class="btn btn-primary">Yeni Müşteri Ekle</a>
